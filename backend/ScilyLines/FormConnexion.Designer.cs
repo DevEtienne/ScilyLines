@@ -42,9 +42,9 @@
             // 
             this.labelUtilisateur.AutoSize = true;
             this.labelUtilisateur.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
-            this.labelUtilisateur.Location = new System.Drawing.Point(234, 119);
+            this.labelUtilisateur.Location = new System.Drawing.Point(263, 149);
             this.labelUtilisateur.Name = "labelUtilisateur";
-            this.labelUtilisateur.Size = new System.Drawing.Size(90, 24);
+            this.labelUtilisateur.Size = new System.Drawing.Size(109, 26);
             this.labelUtilisateur.TabIndex = 0;
             this.labelUtilisateur.Text = "Utilisateur";
             // 
@@ -52,35 +52,37 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
-            this.label1.Location = new System.Drawing.Point(201, 169);
+            this.label1.Location = new System.Drawing.Point(226, 211);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(123, 24);
+            this.label1.Size = new System.Drawing.Size(142, 26);
             this.label1.TabIndex = 1;
             this.label1.Text = "Mot de passe";
             // 
             // textBoxUtilisateur
             // 
-            this.textBoxUtilisateur.Location = new System.Drawing.Point(340, 121);
+            this.textBoxUtilisateur.Location = new System.Drawing.Point(382, 151);
             this.textBoxUtilisateur.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.textBoxUtilisateur.Name = "textBoxUtilisateur";
-            this.textBoxUtilisateur.Size = new System.Drawing.Size(170, 22);
+            this.textBoxUtilisateur.Size = new System.Drawing.Size(191, 26);
             this.textBoxUtilisateur.TabIndex = 2;
+            this.textBoxUtilisateur.TextChanged += new System.EventHandler(this.textBoxUtilisateur_TextChanged);
             // 
             // textBoxMotDePasse
             // 
-            this.textBoxMotDePasse.Location = new System.Drawing.Point(340, 171);
+            this.textBoxMotDePasse.Location = new System.Drawing.Point(382, 214);
             this.textBoxMotDePasse.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.textBoxMotDePasse.Name = "textBoxMotDePasse";
-            this.textBoxMotDePasse.Size = new System.Drawing.Size(170, 22);
+            this.textBoxMotDePasse.Size = new System.Drawing.Size(191, 26);
             this.textBoxMotDePasse.TabIndex = 3;
+            this.textBoxMotDePasse.UseSystemPasswordChar = true;
             // 
             // buttonConnexion
             // 
             this.buttonConnexion.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonConnexion.Location = new System.Drawing.Point(250, 227);
+            this.buttonConnexion.Location = new System.Drawing.Point(281, 284);
             this.buttonConnexion.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.buttonConnexion.Name = "buttonConnexion";
-            this.buttonConnexion.Size = new System.Drawing.Size(129, 31);
+            this.buttonConnexion.Size = new System.Drawing.Size(145, 39);
             this.buttonConnexion.TabIndex = 4;
             this.buttonConnexion.Text = "Connexion";
             this.buttonConnexion.UseVisualStyleBackColor = true;
@@ -90,9 +92,9 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft YaHei", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(206, 9);
+            this.label2.Location = new System.Drawing.Point(232, 11);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(207, 52);
+            this.label2.Size = new System.Drawing.Size(247, 62);
             this.label2.TabIndex = 5;
             this.label2.Text = "ScilyLines";
             // 
@@ -100,17 +102,18 @@
             // 
             this.pictureBox1.Image = global::ScilyLines.Properties.Resources.Passeport;
             this.pictureBox1.InitialImage = null;
-            this.pictureBox1.Location = new System.Drawing.Point(28, 95);
+            this.pictureBox1.Location = new System.Drawing.Point(32, 119);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(136, 123);
+            this.pictureBox1.Size = new System.Drawing.Size(153, 154);
             this.pictureBox1.TabIndex = 6;
             this.pictureBox1.TabStop = false;
             // 
             // FormConnexion
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(639, 305);
+            this.ClientSize = new System.Drawing.Size(719, 381);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.buttonConnexion);

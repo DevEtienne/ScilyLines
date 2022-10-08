@@ -14,55 +14,7 @@ namespace ScilyLines
     {
         private static ConnexionSql connexion = null;
         private static readonly object padLock = new object();
-
-        // Méthode de chiffrement du mot de passe
-        public static string MD5Encryption(string encryptionText)
-        {
-
-            MD5CryptoServiceProvider md5 = new MD5CryptoServiceProvider();
-            // Conversion de la chaîne de caractères en tableau de byte.
-            byte[] array = Encoding.UTF8.GetBytes(encryptionText);
-            //Calcul du hash du tableau
-            array = md5.ComputeHash(array);
-            //Création d'un objet StringBuilder pour stocker le hash.
-            StringBuilder sb = new StringBuilder();
-            
-            //Conversion de tout les byte en une chaîne de caractères
-            foreach (byte ba in array)
-            {
-                sb.Append(ba.ToString("x2").ToLower());
-            }
-
-            //Retourne une chaîne hexadécimal.
-            return sb.ToString();
-        }
-
-        // Vérification des identifiants de la base de données
-        public static void login(string unProvider, string uneDatabase, string unUid, string unMdp)
-        {
-            string connexionString = String.Format("Data Source={0};port=3306; Initial Catalog={1}; User Id=root;password=''", unProvider, uneDatabase);
-            MySqlConnection mySqlCn = new MySqlConnection(connexionString);
-            mySqlCn.Open();
-            MySqlCommand cmd = mySqlCn.CreateCommand();
-            string hashPassword = ConnexionSql.MD5Encryption(unMdp);
-            string req = String.Format("select * from login where username='{0}' and password='{1}'", unUid, hashPassword);
-            cmd.CommandType = CommandType.Text;
-            cmd.CommandText = req;
-            DataTable dt = new DataTable();
-            MySqlDataAdapter da = new MySqlDataAdapter(cmd);
-            da.Fill(dt);
-            mySqlCn.Close();
-            int nbLignes = Convert.ToInt32(dt.Rows.Count.ToString());
-            
-            if (nbLignes == 1)
-            {
-                ConnexionSql.getInstance(unProvider, uneDatabase, unUid, hashPassword);
-            }
-            else
-            {
-                MessageBox.Show("Identifiants invalides");
-            }
-        }
+        private static MySqlCommand mySqlCn;
 
         // Connection à la base de données
         private ConnexionSql(MySqlConnection mySqlCn)
@@ -88,7 +40,8 @@ namespace ScilyLines
                     {
                         string connexionString = String.Format("SERVER={0};DATABASE={1};UID={2};PASSWORD={3};", unProvider, uneDatabase, unUid, unMdp);
                         MySqlConnection mySqlCn = new MySqlConnection(connexionString);
-                        connexion = new ConnexionSql(mySqlCn);
+                        ConnexionSql connexion = new ConnexionSql(mySqlCn);
+
                     }
                 }
                 catch (Exception ex)
@@ -98,5 +51,28 @@ namespace ScilyLines
                 return connexion;
             }
         }
+
+        public static List<string> findSecteur(string req, MySqlConnection connexion)
+        {
+            MySqlCommand cmd = connexion.CreateCommand();
+            cmd.CommandType = CommandType.Text;
+            cmd.CommandText = req;
+            DataTable dt = new DataTable();
+            MySqlDataAdapter da = new MySqlDataAdapter(cmd);
+            da.Fill(dt);
+            int count = dt.Rows.Count;
+            List<string> listSecteur = new List<string>();
+            if (count > 0)
+            {
+                for (int i = 0; i < count; i++)
+                {
+                    listSecteur.Add(dt.Rows[i].ToString());
+                }
+                return listSecteur;
+            }
+            return null;
+        }
+
+
     }
 }

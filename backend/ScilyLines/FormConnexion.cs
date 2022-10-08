@@ -4,9 +4,11 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using MySql.Data.MySqlClient;
 
 namespace ScilyLines
 {
@@ -23,7 +25,18 @@ namespace ScilyLines
         {
             string uid = textBoxUtilisateur.Text;
             string mdp = textBoxMotDePasse.Text;
-            ConnexionSql.login(PROVIDER, DATABASE, uid, mdp);
+            if (Verification.login(PROVIDER, DATABASE, uid, mdp))
+            {
+                string hashPassword = Verification.MD5Encryption(mdp);
+                ConnexionSql.getInstance(PROVIDER,DATABASE,uid,hashPassword);  
+                FormMenu formMenu = new FormMenu();
+                formMenu.ShowDialog();
+            };
+        }
+
+        private void textBoxUtilisateur_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
