@@ -63,9 +63,9 @@ namespace ScilyLines.Properties {
         /// <summary>
         ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Passeport {
+        internal static System.Drawing.Bitmap login {
             get {
-                object obj = ResourceManager.GetObject("Passeport", resourceCulture);
+                object obj = ResourceManager.GetObject("login", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -99,11 +99,11 @@
             // 
             // pictureBox1
             // 
-            this.pictureBox1.Image = global::ScilyLines.Properties.Resources.Passeport;
-            this.pictureBox1.InitialImage = null;
-            this.pictureBox1.Location = new System.Drawing.Point(28, 95);
+            this.pictureBox1.Image = global::ScilyLines.Properties.Resources.login;
+            this.pictureBox1.Location = new System.Drawing.Point(12, 78);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(136, 123);
+            this.pictureBox1.Size = new System.Drawing.Size(183, 170);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 6;
             this.pictureBox1.TabStop = false;
             // 
@@ -111,7 +111,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(639, 305);
+            this.ClientSize = new System.Drawing.Size(598, 305);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.buttonConnexion);
