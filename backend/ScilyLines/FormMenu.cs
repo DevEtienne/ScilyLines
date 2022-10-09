@@ -13,9 +13,18 @@ namespace ScilyLines
 {
     public partial class FormMenu : Form
     {
-        public FormMenu()
+        string provider;
+        string database;
+        string uid;
+        string mdp;
+
+        public FormMenu(string provider, string database, string uid, string mdp)
         {
             InitializeComponent();
+            this.provider = provider;
+            this.database = database;
+            this.uid = uid;
+            this.mdp = mdp;
         }
 
         private void listBoxSecteur_SelectedIndexChanged(object sender, EventArgs e)
@@ -25,12 +34,13 @@ namespace ScilyLines
 
         private void FormMenu_Load(object sender, EventArgs e)
         {
-            string req = "select * from secteur";
-            List<string> listeSecteur = ConnexionSql.findSecteur(req, ConnexionSql.connexion) ;
+            ConnexionSql connexion = ConnexionSql.getInstance(provider, database, uid, mdp);
+            connexion.openConnection();
+            List<Secteur> listeSecteur = connexion.findSecteur();
 
-            foreach (string secteur in listeSecteur)
+            foreach (Secteur secteur in listeSecteur)
             {
-                listBoxSecteur.Items.Add(secteur);
+                listBoxSecteur.Items.Add(String.Format("{0}. {1}", secteur.Id, secteur.Nom));
             }
         }
     }

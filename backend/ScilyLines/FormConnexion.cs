@@ -28,15 +28,11 @@ namespace ScilyLines
             if (Verification.login(PROVIDER, DATABASE, uid, mdp))
             {
                 string hashPassword = Verification.MD5Encryption(mdp);
-                ConnexionSql.getInstance(PROVIDER,DATABASE,uid,hashPassword);  
-                FormMenu formMenu = new FormMenu();
+                FormMenu formMenu = new FormMenu(PROVIDER, DATABASE, uid, hashPassword);
+                this.Hide();
                 formMenu.ShowDialog();
+                this.Close();
             };
-        }
-
-        private void textBoxUtilisateur_TextChanged(object sender, EventArgs e)
-        {
-
         }
     }
 }

@@ -48,7 +48,7 @@ Thumbs.db
 *.mov
 *.wmv
 
-#VsCode IDE
+# VsCode IDE
 .vs/
 
-
+obj/

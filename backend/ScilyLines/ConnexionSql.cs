@@ -14,14 +14,15 @@ namespace ScilyLines
     {
         private static ConnexionSql connexion = null;
         private static readonly object padLock = new object();
-        private static MySqlCommand mySqlCn;
+        private MySqlConnection mySqlCn;
 
         // Connection à la base de données
-        private ConnexionSql(MySqlConnection mySqlCn)
+        private ConnexionSql(string unProvider, string uneDatabase, string unUid, string unMdp)
         {
             try
             {
-                mySqlCn.Open();
+                string connexionString = String.Format("SERVER={0};DATABASE={1};UID={2};PASSWORD={3};", unProvider, uneDatabase, unUid, unMdp);
+                mySqlCn = new MySqlConnection(connexionString);
             }
             catch (Exception ex)
             {
@@ -38,10 +39,8 @@ namespace ScilyLines
                 {
                     if (connexion == null)
                     {
-                        string connexionString = String.Format("SERVER={0};DATABASE={1};UID={2};PASSWORD={3};", unProvider, uneDatabase, unUid, unMdp);
-                        MySqlConnection mySqlCn = new MySqlConnection(connexionString);
-                        ConnexionSql connexion = new ConnexionSql(mySqlCn);
-
+                        ConnexionSql connexion = new ConnexionSql(unProvider, uneDatabase, unUid, unMdp);
+                        return connexion;
                     }
                 }
                 catch (Exception ex)
@@ -52,27 +51,39 @@ namespace ScilyLines
             }
         }
 
-        public static List<string> findSecteur(string req, MySqlConnection connexion)
+        public void openConnection()
         {
-            MySqlCommand cmd = connexion.CreateCommand();
-            cmd.CommandType = CommandType.Text;
-            cmd.CommandText = req;
-            DataTable dt = new DataTable();
-            MySqlDataAdapter da = new MySqlDataAdapter(cmd);
-            da.Fill(dt);
-            int count = dt.Rows.Count;
-            List<string> listSecteur = new List<string>();
-            if (count > 0)
+            try
             {
-                for (int i = 0; i < count; i++)
-                {
-                    listSecteur.Add(dt.Rows[i].ToString());
-                }
-                return listSecteur;
+                mySqlCn.Open();
             }
-            return null;
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
         }
 
+        public void closeConnection()
+        {
+            mySqlCn.Close();
+        }
+        public List<Secteur> findSecteur()
+        {
+            string req = "select * from secteur";
+            MySqlCommand mySqlCom = new MySqlCommand(req, mySqlCn);
+            MySqlDataReader reader =  mySqlCom.ExecuteReader();
+            List<Secteur> listeSecteur = new List<Secteur>();
 
+            while (reader.Read())
+            {
+                int idSecteur = Convert.ToInt32(reader["id"].ToString());
+                string nomSecteur = reader["nom"].ToString();
+                Secteur secteur = new Secteur(idSecteur, nomSecteur);
+                listeSecteur.Add(secteur);
+            }
+            
+            reader.Close();
+            return listeSecteur;
+        }
     }
 }

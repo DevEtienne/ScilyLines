@@ -69,3 +69,4 @@ C:\Users\brass\scilylines\backend\ScilyLines\obj\Debug\ScilyLines.csproj.CopyCom
 C:\Users\brass\scilylines\backend\ScilyLines\obj\Debug\ScilyLines.exe
 C:\Users\brass\scilylines\backend\ScilyLines\obj\Debug\ScilyLines.pdb
 C:\Users\brass\scilylines\backend\ScilyLines\obj\Debug\ScilyLines.FormMenu.resources
+C:\Users\etien\scilylines\backend\ScilyLines\obj\Debug\ScilyLines.FormMenu.resources
