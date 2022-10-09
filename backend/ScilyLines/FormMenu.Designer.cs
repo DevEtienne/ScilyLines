@@ -35,6 +35,7 @@
             this.listBoxSecteur = new System.Windows.Forms.ListBox();
             this.listBoxLiaison = new System.Windows.Forms.ListBox();
             this.label2 = new System.Windows.Forms.Label();
+            this.labelNoLiaison = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // buttonAjouter
@@ -96,7 +97,7 @@
             this.listBoxLiaison.Font = new System.Drawing.Font("Yu Gothic UI", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.listBoxLiaison.FormattingEnabled = true;
             this.listBoxLiaison.ItemHeight = 25;
-            this.listBoxLiaison.Location = new System.Drawing.Point(369, 46);
+            this.listBoxLiaison.Location = new System.Drawing.Point(376, 46);
             this.listBoxLiaison.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.listBoxLiaison.Name = "listBoxLiaison";
             this.listBoxLiaison.Size = new System.Drawing.Size(291, 154);
@@ -112,12 +113,23 @@
             this.label2.TabIndex = 6;
             this.label2.Text = "Liaisons";
             // 
+            // labelNoLiaison
+            // 
+            this.labelNoLiaison.AutoSize = true;
+            this.labelNoLiaison.BackColor = System.Drawing.SystemColors.Info;
+            this.labelNoLiaison.Font = new System.Drawing.Font("Yu Gothic UI", 10.8F);
+            this.labelNoLiaison.Location = new System.Drawing.Point(444, 99);
+            this.labelNoLiaison.Name = "labelNoLiaison";
+            this.labelNoLiaison.Size = new System.Drawing.Size(0, 25);
+            this.labelNoLiaison.TabIndex = 7;
+            // 
             // FormMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.ClientSize = new System.Drawing.Size(711, 360);
+            this.Controls.Add(this.labelNoLiaison);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.listBoxLiaison);
             this.Controls.Add(this.listBoxSecteur);
@@ -142,5 +154,6 @@
         private System.Windows.Forms.ListBox listBoxSecteur;
         private System.Windows.Forms.ListBox listBoxLiaison;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label labelNoLiaison;
     }
 }

@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MySql.Data.MySqlClient;
 using System.Windows.Forms;
+using Org.BouncyCastle.Ocsp;
 
 namespace ScilyLines
 {
@@ -40,23 +41,21 @@ namespace ScilyLines
             string connexionString = String.Format("Data Source={0};port=3306; Initial Catalog={1}; User Id=root;password=''", unProvider, uneDatabase);
             MySqlConnection mySqlCn = new MySqlConnection(connexionString);
             mySqlCn.Open();
-            MySqlCommand cmd = mySqlCn.CreateCommand();
+            string req = "select * from login where username=?username and password=?password";
+            MySqlCommand cmd = new MySqlCommand(req, mySqlCn);
             string hashPassword = Verification.MD5Encryption(unMdp);
-            string req = String.Format("select * from login where username='{0}' and password='{1}'", unUid, hashPassword);
-            cmd.CommandType = CommandType.Text;
-            cmd.CommandText = req;
-            DataTable dt = new DataTable();
-            MySqlDataAdapter da = new MySqlDataAdapter(cmd);
-            da.Fill(dt);
-            mySqlCn.Close();
-            int nbLignes = dt.Rows.Count;
-
-            if (nbLignes == 1)
+            cmd.Parameters.Add(new MySqlParameter("username", unUid));
+            cmd.Parameters.Add(new MySqlParameter("password", hashPassword));
+            MySqlDataReader dr = cmd.ExecuteReader();
+            
+            if (dr.HasRows == true)
             {
+                mySqlCn.Close();
                 return true;
             }
             else
             {
+                mySqlCn.Close();
                 MessageBox.Show("Identifiants invalides");
                 return false;
             }

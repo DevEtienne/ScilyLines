@@ -47,6 +47,7 @@ namespace ScilyLines
         private void listBoxSecteur_SelectedIndexChanged(object sender, EventArgs e)
         {
             listBoxLiaison.Items.Clear();
+            labelNoLiaison.Text = "";
             int indexSecteur = listBoxSecteur.SelectedIndex;
             int id = 0;
 
@@ -58,6 +59,8 @@ namespace ScilyLines
                     listBoxLiaison.Items.Add(String.Format("{0}. {1} - {2} : {3}", id, liaison.PortDepart.Nom, liaison.PortArrive.Nom, liaison.Duree));
                 }
             }
+            
+            if (id == 0) labelNoLiaison.Text = "Aucune Liaison";
         }
     }
 }
