@@ -21,6 +21,7 @@ namespace ScilyLines
         List<Secteur> listeSecteur;
         List<Port> listePort;
         List<Liaison> listeLiaison;
+        List<Liaison> listeLiaisonBySecteur;
 
         public FormMenu(string provider, string database, string uid, string mdp)
         {
@@ -31,9 +32,8 @@ namespace ScilyLines
             this.mdp = mdp;
         }
 
-        private void FormMenu_Load(object sender, EventArgs e)
+        public void refreshListboxSecteur()
         {
-            connexion = ConnexionSql.getInstance(provider, database, uid, mdp);
             listeSecteur = connexion.findSecteur();
             listePort = connexion.findPort();
             listeLiaison = connexion.findLiaison(listeSecteur, listePort);
@@ -49,28 +49,66 @@ namespace ScilyLines
                 comboBoxPortArrivee.Items.Add(port.Nom);
             }
         }
-
-        private void listBoxSecteur_SelectedIndexChanged(object sender, EventArgs e)
+        public void refreshListboxLiaison()
         {
             listBoxLiaison.Items.Clear();
             labelNoLiaison.Text = "";
             int indexSecteur = listBoxSecteur.SelectedIndex + 1;
             int id = 0;
-            List<Liaison> listeLiaisonBySecteurId = connexion.findListeLiaisonBySecteurId(indexSecteur, listeLiaison);
-            foreach (Liaison liaison in listeLiaisonBySecteurId)
+            listeLiaisonBySecteur = connexion.findListeLiaisonBySecteurId(indexSecteur, listeLiaison);
+
+            foreach (Liaison liaison in listeLiaisonBySecteur)
             {
                 id++;
                 listBoxLiaison.Items.Add(String.Format("{0}. {1} - {2} : {3}", id, liaison.PortDepart.Nom, liaison.PortArrive.Nom, liaison.Duree));
             }
-            
+
             if (id == 0) labelNoLiaison.Text = "Aucune Liaison";
+        }
+        private void FormMenu_Load(object sender, EventArgs e)
+        {
+            connexion = ConnexionSql.getInstance(provider, database, uid, mdp);
+            this.refreshListboxSecteur();
+        }
+
+        private void listBoxSecteur_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            this.refreshListboxLiaison();
         }
 
         private void buttonAjouter_Click(object sender, EventArgs e)
         {
+            int idLiaison = listeLiaison.Count() + 1;
+            string duree = textBoxDuree.Text;
             int idPortDepart = comboBoxPortDepart.SelectedIndex + 1;
             int idPortArrivee = comboBoxPortArrivee.SelectedIndex + 1;
-            string duree = textBoxDuree.Text;
+            int idSecteur = listBoxSecteur.SelectedIndex + 1;
+            Port portDepart = connexion.findPortById(idPortDepart, listePort);
+            Port portArrivee = connexion.findPortById(idPortArrivee, listePort);
+            Secteur secteur = connexion.findSecteurById(idSecteur, listeSecteur);
+            
+            if (portDepart != null && portArrivee != null && secteur != null & duree != "")
+            {
+                Liaison liaison = new Liaison(idLiaison, duree, portDepart, portArrivee, secteur);
+                listeLiaison.Add(liaison);
+                connexion.ajouterLiaison(liaison);
+                this.refreshListboxLiaison();
+            }
+        }
+
+        private void buttonSupprimer_Click(object sender, EventArgs e)
+        {
+            int indexSecteur = listBoxSecteur.SelectedIndex + 1;
+            //Secteur secteur = listeSecteur[indexSecteur];
+            listeLiaisonBySecteur = connexion.findListeLiaisonBySecteurId(indexSecteur, listeLiaison);
+            int indexLiaison = listBoxLiaison.SelectedIndex;
+            if (indexLiaison >= 0)
+            {
+                Liaison liaison = listeLiaisonBySecteur[indexLiaison];
+                listeLiaison.Remove(liaison);
+                connexion.supprimerLiaison(liaison);
+                this.refreshListboxLiaison();
+            }
         }
     }
 }

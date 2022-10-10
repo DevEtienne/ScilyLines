@@ -10,7 +10,6 @@ namespace ScilyLines
     {
         int id;
         string nom;
-        List<Liaison> ListLiaisons;
 
         public Secteur(int id, string nom)
         {

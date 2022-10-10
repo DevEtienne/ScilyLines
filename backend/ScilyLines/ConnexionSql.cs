@@ -7,6 +7,7 @@ using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 using System.Security.Cryptography;
 using System.Data;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace ScilyLines
 {
@@ -121,8 +122,8 @@ namespace ScilyLines
             {
                 int idLiaison = Convert.ToInt32(reader["id"].ToString());
                 string dureeLiaison = reader["duree"].ToString();
-                int idPortDepart = Convert.ToInt32(reader["port-depart"].ToString());
-                int idPortArrivee = Convert.ToInt32(reader["port-arrivee"].ToString());
+                int idPortDepart = Convert.ToInt32(reader["portDepart"].ToString());
+                int idPortArrivee = Convert.ToInt32(reader["portArrivee"].ToString());
                 int idSecteur = Convert.ToInt32(reader["idSecteur"].ToString());
                 Port portDepart = this.findPortById(idPortDepart, listePort);
                 Port portArrivee = this.findPortById(idPortArrivee, listePort);
@@ -170,6 +171,30 @@ namespace ScilyLines
                 }
             }
             return listeLiaisonBySecteurId;
+        }
+
+        public void ajouterLiaison(Liaison liaison)
+        {
+            this.openConnection();
+            string req = "insert into liaison values (?id, ?duree, ?portDepart, ?portArrivee, ?idSecteur)";
+            MySqlCommand mySqlCom = new MySqlCommand(req, mySqlCn);
+            mySqlCom.Parameters.Add("id", MySqlDbType.Int32).Value = liaison.Id;
+            mySqlCom.Parameters.Add("duree", MySqlDbType.VarChar).Value = liaison.Duree;
+            mySqlCom.Parameters.Add("portDepart", MySqlDbType.Int32).Value = liaison.PortDepart.Id;
+            mySqlCom.Parameters.Add("portArrivee", MySqlDbType.Int32).Value = liaison.PortArrive.Id;
+            mySqlCom.Parameters.Add("idSecteur", MySqlDbType.Int32).Value = liaison.Secteur.Id;
+            mySqlCom.ExecuteNonQuery();
+            this.closeConnection();
+        }
+        
+        public void supprimerLiaison(Liaison liaison)
+        {
+            this.openConnection();
+            string req = "delete from liaison where id = ?id";
+            MySqlCommand mySqlCom = new MySqlCommand(req, mySqlCn);
+            mySqlCom.Parameters.Add("id", MySqlDbType.Int32).Value = liaison.Id;
+            mySqlCom.ExecuteNonQuery();
+            this.closeConnection();
         }
     }
 }

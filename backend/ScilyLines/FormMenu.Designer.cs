@@ -66,6 +66,7 @@
             this.buttonSupprimer.TabIndex = 2;
             this.buttonSupprimer.Text = "Supprimer";
             this.buttonSupprimer.UseVisualStyleBackColor = true;
+            this.buttonSupprimer.Click += new System.EventHandler(this.buttonSupprimer_Click);
             // 
             // buttonModifier
             // 

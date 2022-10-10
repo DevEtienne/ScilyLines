@@ -16,7 +16,6 @@ namespace ScilyLines
         // Méthode de chiffrement du mot de passe
         public static string MD5Encryption(string encryptionText)
         {
-
             MD5CryptoServiceProvider md5 = new MD5CryptoServiceProvider();
             // Conversion de la chaîne de caractères en tableau de byte.
             byte[] array = Encoding.UTF8.GetBytes(encryptionText);
