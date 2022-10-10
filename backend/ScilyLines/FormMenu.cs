@@ -110,6 +110,8 @@ namespace ScilyLines
                 connexion.supprimerLiaison(liaison);
                 this.refreshListboxLiaison();
             }
-        }
+        }      
+
+        
     }
 }
