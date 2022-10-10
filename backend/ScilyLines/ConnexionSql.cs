@@ -68,6 +68,7 @@ namespace ScilyLines
         {
             mySqlCn.Close();
         }
+        //Mettre les Secteurs dans une liste
         public List<Secteur> findSecteur()
         {
             this.openConnection();
@@ -76,6 +77,7 @@ namespace ScilyLines
             MySqlDataReader reader =  mySqlCom.ExecuteReader();
             List<Secteur> listeSecteur = new List<Secteur>();
 
+            //Conversion des variable appartenant au Secteur en int (ToString) pour la stoker
             while (reader.Read())
             {
                 int idSecteur = Convert.ToInt32(reader["id"].ToString());
@@ -97,6 +99,7 @@ namespace ScilyLines
             MySqlDataReader reader = mySqlCom.ExecuteReader();
             List<Port> listePort = new List<Port>();
 
+            //Conversion des variables appartenant au Port, en int (ToString) pour la stoker
             while (reader.Read())
             {
                 int idPort = Convert.ToInt32(reader["id"].ToString());
@@ -120,6 +123,7 @@ namespace ScilyLines
 
             while (reader.Read())
             {
+                //Reunir toutes les données dans la liaision 
                 int idLiaison = Convert.ToInt32(reader["id"].ToString());
                 string dureeLiaison = reader["duree"].ToString();
                 int idPortDepart = Convert.ToInt32(reader["portDepart"].ToString());
@@ -136,7 +140,7 @@ namespace ScilyLines
             this.closeConnection();
             return listeLiaison;
         }
-
+        
         public Secteur findSecteurById(int idSecteur, List<Secteur> listeSecteur)
         {
             foreach (Secteur secteur in listeSecteur)
@@ -172,7 +176,7 @@ namespace ScilyLines
             }
             return listeLiaisonBySecteurId;
         }
-
+        //Ajouter toutes les données du trajet dans la liaision
         public void ajouterLiaison(Liaison liaison)
         {
             this.openConnection();
@@ -186,7 +190,7 @@ namespace ScilyLines
             mySqlCom.ExecuteNonQuery();
             this.closeConnection();
         }
-        
+        //Supprimer une liaison
         public void supprimerLiaison(Liaison liaison)
         {
             this.openConnection();

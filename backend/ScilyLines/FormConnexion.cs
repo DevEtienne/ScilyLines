@@ -12,6 +12,7 @@ using MySql.Data.MySqlClient;
 
 namespace ScilyLines
 {
+    //Connexion à la base de donnée
     public partial class FormConnexion : Form
     {
         const string DATABASE = "db-scilylines";
@@ -20,7 +21,7 @@ namespace ScilyLines
         {
             InitializeComponent();
         }
-
+        //Récupérer les variables pour la connexion (login,MDP)
         private void buttonConnexion_Click(object sender, EventArgs e)
         {
             string uid = textBoxUtilisateur.Text;

@@ -75,7 +75,7 @@ namespace ScilyLines
         {
             this.refreshListboxLiaison();
         }
-
+        //Ajouter un nouveau trajet dans la liaison en appuyant sur le bouton Ajouter
         private void buttonAjouter_Click(object sender, EventArgs e)
         {
             int idLiaison = listeLiaison.Count() + 1;
@@ -86,7 +86,8 @@ namespace ScilyLines
             Port portDepart = connexion.findPortById(idPortDepart, listePort);
             Port portArrivee = connexion.findPortById(idPortArrivee, listePort);
             Secteur secteur = connexion.findSecteurById(idSecteur, listeSecteur);
-            
+
+            //Lorsque les données ne sont pas remplites le bouton Ajouter ne marchera pas 
             if (portDepart != null && portArrivee != null && secteur != null & duree != "")
             {
                 Liaison liaison = new Liaison(idLiaison, duree, portDepart, portArrivee, secteur);
@@ -95,7 +96,7 @@ namespace ScilyLines
                 this.refreshListboxLiaison();
             }
         }
-
+        //Supprimer la liaison en appuyant sur le bouton Supprimer
         private void buttonSupprimer_Click(object sender, EventArgs e)
         {
             int indexSecteur = listBoxSecteur.SelectedIndex + 1;
