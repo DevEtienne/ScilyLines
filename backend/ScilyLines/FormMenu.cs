@@ -42,25 +42,35 @@ namespace ScilyLines
             {
                 listBoxSecteur.Items.Add(String.Format("{0}. {1}", secteur.Id, secteur.Nom));
             }
+
+            foreach (Port port in listePort)
+            {
+                comboBoxPortDepart.Items.Add(port.Nom);
+                comboBoxPortArrivee.Items.Add(port.Nom);
+            }
         }
 
         private void listBoxSecteur_SelectedIndexChanged(object sender, EventArgs e)
         {
             listBoxLiaison.Items.Clear();
             labelNoLiaison.Text = "";
-            int indexSecteur = listBoxSecteur.SelectedIndex;
+            int indexSecteur = listBoxSecteur.SelectedIndex + 1;
             int id = 0;
-
-            foreach (Liaison liaison in listeLiaison)
+            List<Liaison> listeLiaisonBySecteurId = connexion.findListeLiaisonBySecteurId(indexSecteur, listeLiaison);
+            foreach (Liaison liaison in listeLiaisonBySecteurId)
             {
-                if (liaison.Secteur.Id == indexSecteur)
-                {
-                    id++;
-                    listBoxLiaison.Items.Add(String.Format("{0}. {1} - {2} : {3}", id, liaison.PortDepart.Nom, liaison.PortArrive.Nom, liaison.Duree));
-                }
+                id++;
+                listBoxLiaison.Items.Add(String.Format("{0}. {1} - {2} : {3}", id, liaison.PortDepart.Nom, liaison.PortArrive.Nom, liaison.Duree));
             }
             
             if (id == 0) labelNoLiaison.Text = "Aucune Liaison";
+        }
+
+        private void buttonAjouter_Click(object sender, EventArgs e)
+        {
+            int idPortDepart = comboBoxPortDepart.SelectedIndex + 1;
+            int idPortArrivee = comboBoxPortArrivee.SelectedIndex + 1;
+            string duree = textBoxDuree.Text;
         }
     }
 }

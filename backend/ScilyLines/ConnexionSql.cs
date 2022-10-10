@@ -158,5 +158,18 @@ namespace ScilyLines
             }
             return null;
         }
+        public List<Liaison> findListeLiaisonBySecteurId(int idSecteur, List<Liaison> listeLiaison)
+        {
+            List<Liaison> listeLiaisonBySecteurId = new List<Liaison>();
+
+            foreach (Liaison liaison in listeLiaison)
+            {
+                if (liaison.Secteur.Id == idSecteur)
+                {
+                    listeLiaisonBySecteurId.Add(liaison);
+                }
+            }
+            return listeLiaisonBySecteurId;
+        }
     }
 }

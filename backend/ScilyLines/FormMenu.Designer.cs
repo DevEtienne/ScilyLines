@@ -36,21 +36,30 @@
             this.listBoxLiaison = new System.Windows.Forms.ListBox();
             this.label2 = new System.Windows.Forms.Label();
             this.labelNoLiaison = new System.Windows.Forms.Label();
+            this.textBoxDuree = new System.Windows.Forms.TextBox();
+            this.labelPortDepart = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.labelDurée = new System.Windows.Forms.Label();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.comboBoxPortDepart = new System.Windows.Forms.ComboBox();
+            this.comboBoxPortArrivee = new System.Windows.Forms.ComboBox();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // buttonAjouter
             // 
-            this.buttonAjouter.Location = new System.Drawing.Point(71, 242);
+            this.buttonAjouter.Location = new System.Drawing.Point(196, 294);
             this.buttonAjouter.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.buttonAjouter.Name = "buttonAjouter";
-            this.buttonAjouter.Size = new System.Drawing.Size(117, 32);
+            this.buttonAjouter.Size = new System.Drawing.Size(103, 30);
             this.buttonAjouter.TabIndex = 1;
             this.buttonAjouter.Text = "Ajouter";
             this.buttonAjouter.UseVisualStyleBackColor = true;
+            this.buttonAjouter.Click += new System.EventHandler(this.buttonAjouter_Click);
             // 
             // buttonSupprimer
             // 
-            this.buttonSupprimer.Location = new System.Drawing.Point(259, 242);
+            this.buttonSupprimer.Location = new System.Drawing.Point(342, 31);
             this.buttonSupprimer.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.buttonSupprimer.Name = "buttonSupprimer";
             this.buttonSupprimer.Size = new System.Drawing.Size(128, 32);
@@ -60,7 +69,7 @@
             // 
             // buttonModifier
             // 
-            this.buttonModifier.Location = new System.Drawing.Point(438, 242);
+            this.buttonModifier.Location = new System.Drawing.Point(508, 31);
             this.buttonModifier.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.buttonModifier.Name = "buttonModifier";
             this.buttonModifier.Size = new System.Drawing.Size(125, 32);
@@ -123,24 +132,93 @@
             this.labelNoLiaison.Size = new System.Drawing.Size(0, 25);
             this.labelNoLiaison.TabIndex = 7;
             // 
+            // textBoxDuree
+            // 
+            this.textBoxDuree.Location = new System.Drawing.Point(76, 298);
+            this.textBoxDuree.Name = "textBoxDuree";
+            this.textBoxDuree.Size = new System.Drawing.Size(100, 22);
+            this.textBoxDuree.TabIndex = 10;
+            // 
+            // labelPortDepart
+            // 
+            this.labelPortDepart.AutoSize = true;
+            this.labelPortDepart.BackColor = System.Drawing.Color.Lavender;
+            this.labelPortDepart.Location = new System.Drawing.Point(87, 220);
+            this.labelPortDepart.Name = "labelPortDepart";
+            this.labelPortDepart.Size = new System.Drawing.Size(75, 16);
+            this.labelPortDepart.TabIndex = 11;
+            this.labelPortDepart.Text = "Port Départ";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.BackColor = System.Drawing.Color.Lavender;
+            this.label3.Location = new System.Drawing.Point(210, 220);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(77, 16);
+            this.label3.TabIndex = 12;
+            this.label3.Text = "Port Arrivée";
+            // 
+            // labelDurée
+            // 
+            this.labelDurée.AutoSize = true;
+            this.labelDurée.BackColor = System.Drawing.Color.Lavender;
+            this.labelDurée.Location = new System.Drawing.Point(98, 279);
+            this.labelDurée.Name = "labelDurée";
+            this.labelDurée.Size = new System.Drawing.Size(44, 16);
+            this.labelDurée.TabIndex = 13;
+            this.labelDurée.Text = "Durée";
+            // 
+            // panel1
+            // 
+            this.panel1.BackColor = System.Drawing.Color.Lavender;
+            this.panel1.Controls.Add(this.comboBoxPortDepart);
+            this.panel1.Controls.Add(this.comboBoxPortArrivee);
+            this.panel1.Controls.Add(this.buttonSupprimer);
+            this.panel1.Controls.Add(this.buttonModifier);
+            this.panel1.Location = new System.Drawing.Point(34, 220);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(654, 128);
+            this.panel1.TabIndex = 14;
+            // 
+            // comboBoxPortDepart
+            // 
+            this.comboBoxPortDepart.FormattingEnabled = true;
+            this.comboBoxPortDepart.Location = new System.Drawing.Point(42, 22);
+            this.comboBoxPortDepart.Name = "comboBoxPortDepart";
+            this.comboBoxPortDepart.Size = new System.Drawing.Size(103, 24);
+            this.comboBoxPortDepart.TabIndex = 16;
+            // 
+            // comboBoxPortArrivee
+            // 
+            this.comboBoxPortArrivee.FormattingEnabled = true;
+            this.comboBoxPortArrivee.Location = new System.Drawing.Point(162, 22);
+            this.comboBoxPortArrivee.Name = "comboBoxPortArrivee";
+            this.comboBoxPortArrivee.Size = new System.Drawing.Size(103, 24);
+            this.comboBoxPortArrivee.TabIndex = 15;
+            // 
             // FormMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.ClientSize = new System.Drawing.Size(711, 360);
+            this.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
+            this.ClientSize = new System.Drawing.Size(719, 360);
+            this.Controls.Add(this.labelDurée);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.labelPortDepart);
+            this.Controls.Add(this.textBoxDuree);
             this.Controls.Add(this.labelNoLiaison);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.listBoxLiaison);
             this.Controls.Add(this.listBoxSecteur);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.buttonModifier);
-            this.Controls.Add(this.buttonSupprimer);
             this.Controls.Add(this.buttonAjouter);
+            this.Controls.Add(this.panel1);
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "FormMenu";
             this.Text = "FormMenu";
             this.Load += new System.EventHandler(this.FormMenu_Load);
+            this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -155,5 +233,12 @@
         private System.Windows.Forms.ListBox listBoxLiaison;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label labelNoLiaison;
+        private System.Windows.Forms.TextBox textBoxDuree;
+        private System.Windows.Forms.Label labelPortDepart;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label labelDurée;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.ComboBox comboBoxPortDepart;
+        private System.Windows.Forms.ComboBox comboBoxPortArrivee;
     }
 }
