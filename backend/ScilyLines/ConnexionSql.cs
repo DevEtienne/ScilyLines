@@ -80,8 +80,8 @@ namespace ScilyLines
             //Conversion des variable appartenant au Secteur en int (ToString) pour la stoker
             while (reader.Read())
             {
-                int idSecteur = Convert.ToInt32(reader["id"].ToString());
-                string nomSecteur = reader["nom"].ToString();
+                int idSecteur = (int) reader["id"];
+                string nomSecteur = (string) reader["nom"];
                 Secteur secteur = new Secteur(idSecteur, nomSecteur);
                 listeSecteur.Add(secteur);
             }
@@ -102,8 +102,8 @@ namespace ScilyLines
             //Conversion des variables appartenant au Port, en int (ToString) pour la stoker
             while (reader.Read())
             {
-                int idPort = Convert.ToInt32(reader["id"].ToString());
-                string nomPort = reader["nom"].ToString();
+                int idPort = (int) reader["id"];
+                string nomPort = (string) reader["nom"];
                 Port port = new Port(idPort, nomPort);
                 listePort.Add(port);
             }
@@ -123,16 +123,15 @@ namespace ScilyLines
 
             while (reader.Read())
             {
-                //Reunir toutes les données dans la liaision 
-                int idLiaison = Convert.ToInt32(reader["id"].ToString());
-                string dureeLiaison = reader["duree"].ToString();
-                int idPortDepart = Convert.ToInt32(reader["portDepart"].ToString());
-                int idPortArrivee = Convert.ToInt32(reader["portArrivee"].ToString());
-                int idSecteur = Convert.ToInt32(reader["idSecteur"].ToString());
+                //Récuperation des attributs de liaison
+                string dureeLiaison = (string) reader["duree"];
+                int idPortDepart = (int) reader["portDepart"];
+                int idPortArrivee = (int) reader["portArrivee"];
+                int idSecteur = (int) reader["idSecteur"];
                 Port portDepart = this.findPortById(idPortDepart, listePort);
                 Port portArrivee = this.findPortById(idPortArrivee, listePort);
                 Secteur secteur = this.findSecteurById(idSecteur, listeSecteur);
-                Liaison liaison = new Liaison(idLiaison, dureeLiaison, portDepart, portArrivee, secteur);
+                Liaison liaison = new Liaison(dureeLiaison, portDepart, portArrivee, secteur);
                 listeLiaison.Add(liaison);
             }
 
@@ -163,13 +162,13 @@ namespace ScilyLines
             }
             return null;
         }
-        public List<Liaison> findListeLiaisonBySecteurId(int idSecteur, List<Liaison> listeLiaison)
+        public List<Liaison> findListeLiaisonBySecteur(Secteur secteur, List<Liaison> listeLiaison)
         {
             List<Liaison> listeLiaisonBySecteurId = new List<Liaison>();
 
             foreach (Liaison liaison in listeLiaison)
             {
-                if (liaison.Secteur.Id == idSecteur)
+                if (liaison.Secteur == secteur)
                 {
                     listeLiaisonBySecteurId.Add(liaison);
                 }
@@ -180,9 +179,8 @@ namespace ScilyLines
         public void ajouterLiaison(Liaison liaison)
         {
             this.openConnection();
-            string req = "insert into liaison values (?id, ?duree, ?portDepart, ?portArrivee, ?idSecteur)";
+            string req = "insert into liaison(duree, portDepart, portArrivee, idSecteur) values (?duree, ?portDepart, ?portArrivee, ?idSecteur)";
             MySqlCommand mySqlCom = new MySqlCommand(req, mySqlCn);
-            mySqlCom.Parameters.Add("id", MySqlDbType.Int32).Value = liaison.Id;
             mySqlCom.Parameters.Add("duree", MySqlDbType.VarChar).Value = liaison.Duree;
             mySqlCom.Parameters.Add("portDepart", MySqlDbType.Int32).Value = liaison.PortDepart.Id;
             mySqlCom.Parameters.Add("portArrivee", MySqlDbType.Int32).Value = liaison.PortArrive.Id;
@@ -194,9 +192,12 @@ namespace ScilyLines
         public void supprimerLiaison(Liaison liaison)
         {
             this.openConnection();
-            string req = "delete from liaison where id = ?id";
+            string req = "delete from liaison where duree=?duree and portDepart=?portDepart and portArrivee=?portArrivee and idSecteur=?idSecteur";
             MySqlCommand mySqlCom = new MySqlCommand(req, mySqlCn);
-            mySqlCom.Parameters.Add("id", MySqlDbType.Int32).Value = liaison.Id;
+            mySqlCom.Parameters.Add("duree", MySqlDbType.VarChar).Value = liaison.Duree;
+            mySqlCom.Parameters.Add("portDepart", MySqlDbType.Int32).Value = liaison.PortDepart.Id;
+            mySqlCom.Parameters.Add("portArrivee", MySqlDbType.Int32).Value = liaison.PortArrive.Id;
+            mySqlCom.Parameters.Add("idSecteur", MySqlDbType.Int32).Value = liaison.Secteur.Id;
             mySqlCom.ExecuteNonQuery();
             this.closeConnection();
         }
