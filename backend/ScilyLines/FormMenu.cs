@@ -102,7 +102,7 @@ namespace ScilyLines
             Port portArrivee = comboBoxPortArrivee.SelectedItem as Port;
             Secteur secteur = listBoxSecteur.SelectedItem as Secteur;
 
-         //Lorsque les données ne sont pas remplies le bouton Ajouter ne marchera pas 
+            //Lorsque les données ne sont pas remplies le bouton Ajouter ne marchera pas 
             if (portDepart != null && portArrivee != null && secteur != null & duree != "")
             {
                 Liaison liaison = new Liaison(duree, portDepart, portArrivee, secteur);
@@ -114,13 +114,34 @@ namespace ScilyLines
         //Supprimer la liaison en appuyant sur le bouton Supprimer
         private void buttonSupprimer_Click(object sender, EventArgs e)
         {
-            int indexLiaison = listBoxLiaison.SelectedIndex;
-            if (indexLiaison >= 0)
+            Liaison liaison = listBoxLiaison.SelectedItem as Liaison;
+           
+            if (liaison != null)
             {
-                Liaison liaison = listBoxLiaison.SelectedItem as Liaison;
                 listeLiaison.Remove(liaison);
                 connexion.supprimerLiaison(liaison);
                 this.refreshListBoxLiaison();
+            }
+        }
+
+        private void buttonModifier_Click(object sender, EventArgs e)
+        {
+      
+            string duree = textBoxDuree.Text;
+            Liaison liaison = listBoxLiaison.SelectedItem as Liaison;
+            Port portDepart = comboBoxPortDepart.SelectedItem as Port;
+            Port portArrivee = comboBoxPortArrivee.SelectedItem as Port;
+
+            if (liaison != null)
+            {
+                if (portDepart != null && portArrivee != null && duree != "")
+                {
+                    liaison.Duree = duree;
+                    liaison.PortDepart = portDepart;
+                    liaison.PortArrive = portArrivee;
+                    connexion.modifierLiaison(liaison);
+                    this.refreshListBoxLiaison();
+                }              
             }
         }
     }

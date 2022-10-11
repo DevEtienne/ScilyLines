@@ -202,6 +202,21 @@ namespace ScilyLines
             this.closeConnection();
         }
 
+        public void modifierLiaison(Liaison liaison, string duree, Port portArrivee, Port portDepart)
+        {
+            this.openConnection();
+            string req = "update liaison set duree=?dureeModifier, portDepart=?portDepartModifier, portArrivee=?portArriveeModifier where duree=?duree and portDepart=?portDepart and portArrivee=?portArrivee and idSecteur=?idSecteur";
+            MySqlCommand mySqlCom = new MySqlCommand(req, mySqlCn);
+            mySqlCom.Parameters.Add("dureeModifier", MySqlDbType.VarChar).Value = liaison.Duree;
+            mySqlCom.Parameters.Add("portDepartModifier", MySqlDbType.Int32).Value = liaison.PortDepart.Id;
+            mySqlCom.Parameters.Add("portArriveeModifier", MySqlDbType.Int32).Value = liaison.PortArrive.Id;
 
+            mySqlCom.Parameters.Add("duree", MySqlDbType.VarChar).Value = liaison.Duree;
+            mySqlCom.Parameters.Add("portDepart", MySqlDbType.Int32).Value = liaison.PortDepart.Id;
+            mySqlCom.Parameters.Add("portArrivee", MySqlDbType.Int32).Value = liaison.PortArrive.Id;
+            mySqlCom.Parameters.Add("idSecteur", MySqlDbType.Int32).Value = liaison.Secteur.Id;
+            mySqlCom.ExecuteNonQuery();
+            this.closeConnection();
+        }
     }
 }

@@ -19,9 +19,10 @@ namespace ScilyLines
             this.portArrive = portArrive;
             this.secteur = secteur;
         }
-        public string Duree { get => duree; }
-        public Port PortDepart { get => portDepart; }
-        public Port PortArrive { get => portArrive; }
+
+        public string Duree { get => duree; set => duree = value; }
+        public Port PortDepart { get => portDepart; set => portDepart = value; }
+        public Port PortArrive { get => portArrive; set => portArrive = value; }
         public Secteur Secteur { get => secteur; }
     }
 }
