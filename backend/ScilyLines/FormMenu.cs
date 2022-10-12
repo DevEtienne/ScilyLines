@@ -56,6 +56,7 @@ namespace ScilyLines
             listeLiaisonBySecteur = connexion.findListeLiaisonBySecteur(secteur, listeLiaison);
             // Liaison de listBoxLiaison à listeLiaisonBySecteur
             listBoxLiaison.DataSource = listeLiaisonBySecteur;
+
             // Affichage du texte lorsque listeLiaisonBySecteur est vide
             bool isEmpty = !listeLiaisonBySecteur.Any();
             if (isEmpty) labelNoLiaison.Text = "Aucune Liaison";
@@ -78,31 +79,33 @@ namespace ScilyLines
                 comboBoxPortDepart.Items.Add(port);
                 comboBoxPortArrivee.Items.Add(port);
             }
+
             // Affichage du nom de chaque port
             comboBoxPortDepart.DisplayMember = "nom";
             comboBoxPortArrivee.DisplayMember = "nom";
         }
+        // Connexion à la base de données + rechargement des box au chargement du formulaire
         private void FormMenu_Load(object sender, EventArgs e)
         {
             connexion = ConnexionSql.getInstance(provider, database, uid, mdp);
             this.refreshListBoxSecteur();
             this.refreshComboBoxPort();
         }
-
+        // Rechargement de listboxSecteur lors du clique sur un secteur
         private void listBoxSecteur_SelectedIndexChanged(object sender, EventArgs e)
         {
             this.refreshListBoxLiaison();
         }
-        //Ajouter un nouveau trajet dans la liaison en appuyant sur le bouton Ajouter
+        //Ajouter une liaison en appuyant sur le bouton Ajouter
         private void buttonAjouter_Click(object sender, EventArgs e)
         {
-            //int idLiaison = listeLiaison.Count() + 1;
+            // Récuération des données
             string duree = textBoxDuree.Text;
             Port portDepart = comboBoxPortDepart.SelectedItem as Port;
             Port portArrivee = comboBoxPortArrivee.SelectedItem as Port;
             Secteur secteur = listBoxSecteur.SelectedItem as Secteur;
 
-            //Lorsque les données ne sont pas remplies le bouton Ajouter ne marchera pas 
+            // Ajout d'une liaison lorsque les données sont remplies
             if (portDepart != null && portArrivee != null && secteur != null & duree != "")
             {
                 Liaison liaison = new Liaison(duree, portDepart, portArrivee, secteur);
@@ -114,8 +117,10 @@ namespace ScilyLines
         //Supprimer la liaison en appuyant sur le bouton Supprimer
         private void buttonSupprimer_Click(object sender, EventArgs e)
         {
+            // Récupération de la liaison
             Liaison liaison = listBoxLiaison.SelectedItem as Liaison;
-           
+
+            // Suppression de la liaison si une liaison est séléctionnée
             if (liaison != null)
             {
                 listeLiaison.Remove(liaison);
@@ -123,15 +128,16 @@ namespace ScilyLines
                 this.refreshListBoxLiaison();
             }
         }
-
+        // Modifier une liaison en appuyant sur le bouton Modifier
         private void buttonModifier_Click(object sender, EventArgs e)
         {
-      
+            // Récuération des données
             string duree = textBoxDuree.Text;
             Liaison liaison = listBoxLiaison.SelectedItem as Liaison;
             Port portDepart = comboBoxPortDepart.SelectedItem as Port;
             Port portArrivee = comboBoxPortArrivee.SelectedItem as Port;
 
+            // Suppression de la liaison si une liaison est séléctionnée et que les données sont remplies
             if (liaison != null)
             {
                 if (portDepart != null && portArrivee != null && duree != "")
@@ -139,7 +145,7 @@ namespace ScilyLines
                     liaison.Duree = duree;
                     liaison.PortDepart = portDepart;
                     liaison.PortArrive = portArrivee;
-                    connexion.modifierLiaison(liaison);
+                    connexion.modifierLiaison(liaison, duree, portDepart, portArrivee);
                     this.refreshListBoxLiaison();
                 }              
             }

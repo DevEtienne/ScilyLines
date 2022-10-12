@@ -17,7 +17,7 @@ namespace ScilyLines
         private static readonly object padLock = new object();
         private MySqlConnection mySqlCn;
 
-        // Connection à la base de données
+        // Connexion à la base de données
         private ConnexionSql(string unProvider, string uneDatabase, string unUid, string unMdp)
         {
             try
@@ -34,6 +34,7 @@ namespace ScilyLines
         }
         public static ConnexionSql getInstance(string unProvider, string uneDatabase, string unUid, string unMdp)
         {
+            // Test un thread à la fois
             lock (padLock)
             {
                 try
@@ -51,7 +52,7 @@ namespace ScilyLines
                 return connexion;
             }
         }
-
+        // Ouverture de la connexion
         public void openConnection()
         {
             try
@@ -63,12 +64,12 @@ namespace ScilyLines
                 throw (ex);
             }
         }
-
+        // Fermeture de la connexion
         public void closeConnection()
         {
             mySqlCn.Close();
         }
-        //Mettre les Secteurs dans une liste
+        // Récupération d'une liste de secteur via la base de données
         public List<Secteur> findSecteur()
         {
             this.openConnection();
@@ -77,7 +78,6 @@ namespace ScilyLines
             MySqlDataReader reader =  mySqlCom.ExecuteReader();
             List<Secteur> listeSecteur = new List<Secteur>();
 
-            //Conversion des variable appartenant au Secteur en int (ToString) pour la stoker
             while (reader.Read())
             {
                 int idSecteur = (int) reader["id"];
@@ -90,7 +90,7 @@ namespace ScilyLines
             this.closeConnection();
             return listeSecteur;
         }
-        
+        // Récupération d'une liste de port via la base de données
         public List<Port> findPort()
         {
             this.openConnection();
@@ -112,7 +112,7 @@ namespace ScilyLines
             this.closeConnection();
             return listePort;
         }
-
+        // Récupération d'une liste de liaison via la base de données
         public List<Liaison> findLiaison(List<Secteur> listeSecteur, List<Port> listePort)
         {
             this.openConnection();
@@ -205,7 +205,8 @@ namespace ScilyLines
         public void modifierLiaison(Liaison liaison, string duree, Port portArrivee, Port portDepart)
         {
             this.openConnection();
-            string req = "update liaison set duree=?dureeModifier, portDepart=?portDepartModifier, portArrivee=?portArriveeModifier where duree=?duree and portDepart=?portDepart and portArrivee=?portArrivee and idSecteur=?idSecteur";
+            string req = "update liaison set duree=?dureeModifier, portDepart=?portDepartModifier, portArrivee=?portArriveeModifier " +
+                "where duree=?duree and portDepart=?portDepart and portArrivee=?portArrivee and idSecteur=?idSecteur";
             MySqlCommand mySqlCom = new MySqlCommand(req, mySqlCn);
             mySqlCom.Parameters.Add("dureeModifier", MySqlDbType.VarChar).Value = liaison.Duree;
             mySqlCom.Parameters.Add("portDepartModifier", MySqlDbType.Int32).Value = liaison.PortDepart.Id;

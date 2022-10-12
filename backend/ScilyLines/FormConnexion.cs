@@ -12,7 +12,6 @@ using MySql.Data.MySqlClient;
 
 namespace ScilyLines
 {
-    //Connexion à la base de donnée
     public partial class FormConnexion : Form
     {
         const string DATABASE = "db-scilylines";
@@ -21,13 +20,16 @@ namespace ScilyLines
         {
             InitializeComponent();
         }
-        //Récupérer les variables pour la connexion (login,MDP)
         private void buttonConnexion_Click(object sender, EventArgs e)
         {
+            //Récupérer les données pour la connexion (login,MDP)
             string uid = textBoxUtilisateur.Text;
             string mdp = textBoxMotDePasse.Text;
+            
+            // Accès au menu si le login est validé
             if (Verification.login(PROVIDER, DATABASE, uid, mdp))
             {
+                // Chiffrement du mot de passe
                 string hashPassword = Verification.MD5Encryption(mdp);
                 FormMenu formMenu = new FormMenu(PROVIDER, DATABASE, uid, hashPassword);
                 this.Hide();
