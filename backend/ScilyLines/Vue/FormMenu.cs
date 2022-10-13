@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
+using ScilyLines.Controleur;
+using ScilyLines.DAL;
 
 namespace ScilyLines
 {
@@ -17,6 +19,7 @@ namespace ScilyLines
         private string database;
         private string uid;
         private string mdp;
+        Manager manager;
         private static ConnexionSql connexion;
         List<Secteur> listeSecteur;
         List<Port> listePort;
@@ -30,14 +33,16 @@ namespace ScilyLines
             this.database = database;
             this.uid = uid;
             this.mdp = mdp;
+            manager = new Manager(provider, database, uid, mdp);
+            this.MaximumSize = new System.Drawing.Size(560, 350);
         }
         // Actualise listBoxSecteur
         public void refreshListBoxSecteur()
         {
             // Génération des listes
-            listeSecteur = connexion.getSecteurs();
-            listePort = connexion.getPorts();
-            listeLiaison = connexion.getLiaisons(listeSecteur, listePort);
+            listeSecteur = manager.chargementSecteur();
+            listePort = manager.chargementPort();
+            listeLiaison = manager.chargementLiaison(listeSecteur, listePort);
             // Liaison de listBoxSecteur à listeSecteur
             listBoxSecteur.DataSource = listeSecteur;
         }
@@ -53,7 +58,7 @@ namespace ScilyLines
         {
             labelNoLiaison.Text = "";
             Secteur secteur = listBoxSecteur.SelectedItem as Secteur;
-            listeLiaisonBySecteur = connexion.findListeLiaisonBySecteur(secteur, listeLiaison);
+            listeLiaisonBySecteur = LiaisonDAO.findListeLiaisonBySecteur(secteur, listeLiaison);
             // Liaison de listBoxLiaison à listeLiaisonBySecteur
             listBoxLiaison.DataSource = listeLiaisonBySecteur;
 
@@ -87,7 +92,6 @@ namespace ScilyLines
         // Connexion à la base de données + rechargement des box au chargement du formulaire
         private void FormMenu_Load(object sender, EventArgs e)
         {
-            connexion = ConnexionSql.getInstance(provider, database, uid, mdp);
             this.refreshListBoxSecteur();
             this.refreshComboBoxPort();
         }
@@ -110,8 +114,12 @@ namespace ScilyLines
             {
                 Liaison liaison = new Liaison(duree, portDepart, portArrivee, secteur);
                 listeLiaison.Add(liaison);
-                connexion.ajouterLiaison(liaison);
+                manager.ajouterLiaison(liaison);
                 this.refreshListBoxLiaison();
+            }
+            else
+            {
+                MessageBox.Show("Données invalides");
             }
         }
         //Supprimer la liaison en appuyant sur le bouton Supprimer
@@ -124,7 +132,7 @@ namespace ScilyLines
             if (liaison != null)
             {
                 listeLiaison.Remove(liaison);
-                connexion.supprimerLiaison(liaison);
+                manager.supprimerLiaison(liaison);
                 this.refreshListBoxLiaison();
             }
         }
@@ -132,22 +140,22 @@ namespace ScilyLines
         private void buttonModifier_Click(object sender, EventArgs e)
         {
             // Récuération des données
-            string duree = textBoxDuree.Text;
+            string duree = textBoxDureeModifier.Text;
             Liaison liaison = listBoxLiaison.SelectedItem as Liaison;
-            Port portDepart = comboBoxPortDepart.SelectedItem as Port;
-            Port portArrivee = comboBoxPortArrivee.SelectedItem as Port;
 
-            // Suppression de la liaison si une liaison est séléctionnée et que les données sont remplies
+            // Suppression de la liaison si une liaison est séléctionnée et que la durée est indiquée
             if (liaison != null)
             {
-                if (portDepart != null && portArrivee != null && duree != "")
+                if (duree != "")
                 {
                     liaison.Duree = duree;
-                    liaison.PortDepart = portDepart;
-                    liaison.PortArrive = portArrivee;
-                    connexion.modifierLiaison(liaison, duree, portDepart, portArrivee);
+                    manager.modifierLiaison(liaison, duree);
                     this.refreshListBoxLiaison();
-                }              
+                }
+                else
+                {
+                    MessageBox.Show("Veuillez rentrer une durée");
+                }
             }
         }
     }

@@ -4,34 +4,50 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MySql.Data.MySqlClient;
+using MySqlX.XDevAPI;
 
 namespace ScilyLines.DAL
 {
     public class SecteurDAO
     {
-        private static string provider ;
-        private static string datebase;
-        private static string uid;
-        private static string mdp;
 
-        private static ConnexionSql maConnexioSql;
+        string provider;
+        string database;
+        string uid;
+        string mdp;
+
+        private static ConnexionSql maConnexionSql;
         private static MySqlCommand Ocom;
 
-        public SecteurDAO(string provider, string datebase, string uid, string mdp)
+        public SecteurDAO(string provider, string database, string uid, string mdp)
         {
-            SecteurDAO.provider = provider;
-            SecteurDAO.datebase = datebase;
-            SecteurDAO.uid = uid;
-            SecteurDAO.mdp = mdp;
+            this.provider = provider;
+            this.database = database;
+            this.uid = uid;
+            this.mdp = mdp;
         }
 
-        public static void updateSecteur (Secteur )
+        // Récupération d'une liste de secteur via la base de données
+        public List<Secteur> getSecteurs()
+        {
+            maConnexionSql = ConnexionSql.getInstance(provider, database, uid, mdp);
+            maConnexionSql.openConnection();
+            string req = "select * from secteur";
+            Ocom = maConnexionSql.reqExec(req);
+            MySqlDataReader reader = Ocom.ExecuteReader();
+            List<Secteur> listeSecteur = new List<Secteur>();
 
+            while (reader.Read())
+            {
+                int idSecteur = (int)reader["id"];
+                string nomSecteur = (string)reader["nom"];
+                Secteur secteur = new Secteur(idSecteur, nomSecteur);
+                listeSecteur.Add(secteur);
+            }
 
-
-
-
-
-
+            reader.Close();
+            maConnexionSql.closeConnection();
+            return listeSecteur;
+        }
     }
 }

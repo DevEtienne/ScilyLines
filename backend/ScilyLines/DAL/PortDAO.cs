@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using MySql.Data.MySqlClient;
@@ -10,20 +11,20 @@ namespace ScilyLines.DAL
 {
     public class PortDAO
     {
-        private static string provider;
-        private static string database;
-        private static string uid;
-        private static string mdp;
+        string provider;
+        string database;
+        string uid;
+        string mdp;
 
         private static ConnexionSql maConnexionSql;
         private static MySqlCommand Ocom;
 
         public PortDAO(string provider, string database, string uid, string mdp)
         {
-            PortDAO.provider = provider;
-            PortDAO.database = database;
-            PortDAO.uid = uid;
-            PortDAO.mdp = mdp;
+            this.provider = provider;
+            this.database = database;
+            this.uid = uid;
+            this.mdp = mdp;
         }
 
         // Récupération d'une liste de port via la base de données
