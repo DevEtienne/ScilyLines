@@ -35,9 +35,9 @@ namespace ScilyLines
         public void refreshListBoxSecteur()
         {
             // Génération des listes
-            listeSecteur = connexion.findSecteur();
-            listePort = connexion.findPort();
-            listeLiaison = connexion.findLiaison(listeSecteur, listePort);
+            listeSecteur = connexion.getSecteurs();
+            listePort = connexion.getPorts();
+            listeLiaison = connexion.getLiaisons(listeSecteur, listePort);
             // Liaison de listBoxSecteur à listeSecteur
             listBoxSecteur.DataSource = listeSecteur;
         }

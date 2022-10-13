@@ -70,7 +70,7 @@ namespace ScilyLines
             mySqlCn.Close();
         }
         // Récupération d'une liste de secteur via la base de données
-        public List<Secteur> findSecteur()
+        public List<Secteur> getSecteurs()
         {
             this.openConnection();
             string req = "select * from secteur";
@@ -91,7 +91,7 @@ namespace ScilyLines
             return listeSecteur;
         }
         // Récupération d'une liste de port via la base de données
-        public List<Port> findPort()
+        public List<Port> getPorts()
         {
             this.openConnection();
             string req = "select * from port";
@@ -113,7 +113,7 @@ namespace ScilyLines
             return listePort;
         }
         // Récupération d'une liste de liaison via la base de données
-        public List<Liaison> findLiaison(List<Secteur> listeSecteur, List<Port> listePort)
+        public List<Liaison> getLiaisons(List<Secteur> listeSecteur, List<Port> listePort)
         {
             this.openConnection();
             string req = "select * from liaison";
@@ -218,6 +218,11 @@ namespace ScilyLines
             mySqlCom.Parameters.Add("id", MySqlDbType.Int32).Value = liaison.Id;
             mySqlCom.ExecuteNonQuery();
             this.closeConnection();
+        }
+        public MySqlCommand reqExec(string req)
+        {
+            MySqlCommand mysqlCom = new MySqlCommand(req, this.mySqlCn);
+            return (mysqlCom);
         }
     }
 }
