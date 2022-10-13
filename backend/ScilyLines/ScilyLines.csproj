@@ -89,29 +89,33 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ConnexionSql.cs" />
-    <Compile Include="FormConnexion.cs">
+    <Compile Include="DAL\ConnexionSql.cs" />
+    <Compile Include="Vue\FormConnexion.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormConnexion.Designer.cs">
+    <Compile Include="Vue\FormConnexion.Designer.cs">
       <DependentUpon>FormConnexion.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormMenu.cs">
+    <Compile Include="Vue\FormMenu.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormMenu.Designer.cs">
+    <Compile Include="Vue\FormMenu.Designer.cs">
       <DependentUpon>FormMenu.cs</DependentUpon>
     </Compile>
-    <Compile Include="Liaison.cs" />
-    <Compile Include="Port.cs" />
+    <Compile Include="Modele\Liaison.cs" />
+    <Compile Include="DAL\LiaisonDAO.cs" />
+    <Compile Include="Controleur\Manager.cs" />
+    <Compile Include="Modele\Port.cs" />
+    <Compile Include="DAL\PortDAO.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Secteur.cs" />
-    <Compile Include="Verification.cs" />
-    <EmbeddedResource Include="FormConnexion.resx">
+    <Compile Include="Modele\Secteur.cs" />
+    <Compile Include="DAL\SecteurDAO.cs" />
+    <Compile Include="DAL\Verification.cs" />
+    <EmbeddedResource Include="Vue\FormConnexion.resx">
       <DependentUpon>FormConnexion.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormMenu.resx">
+    <EmbeddedResource Include="Vue\FormMenu.resx">
       <DependentUpon>FormMenu.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -141,5 +145,6 @@
   <ItemGroup>
     <None Include="Resources\login.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
