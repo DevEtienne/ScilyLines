@@ -123,7 +123,8 @@ namespace ScilyLines
 
             while (reader.Read())
             {
-                //Récuperation des attributs de liaison
+                //Récupération des attributs de liaison
+                int idLiaison = (int) reader["id"];
                 string dureeLiaison = (string) reader["duree"];
                 int idPortDepart = (int) reader["portDepart"];
                 int idPortArrivee = (int) reader["portArrivee"];
@@ -132,6 +133,7 @@ namespace ScilyLines
                 Port portArrivee = this.findPortById(idPortArrivee, listePort);
                 Secteur secteur = this.findSecteurById(idSecteur, listeSecteur);
                 Liaison liaison = new Liaison(dureeLiaison, portDepart, portArrivee, secteur);
+                liaison.Id = idLiaison;
                 listeLiaison.Add(liaison);
             }
 
@@ -186,36 +188,34 @@ namespace ScilyLines
             mySqlCom.Parameters.Add("portArrivee", MySqlDbType.Int32).Value = liaison.PortArrive.Id;
             mySqlCom.Parameters.Add("idSecteur", MySqlDbType.Int32).Value = liaison.Secteur.Id;
             mySqlCom.ExecuteNonQuery();
+
+            req = "select id from liaison order by id desc limit 1";
+            mySqlCom = new MySqlCommand(req, mySqlCn);
+            int idLiaison = (int) mySqlCom.ExecuteScalar();
+            liaison.Id = idLiaison;
             this.closeConnection();
         }
         //Supprimer une liaison
         public void supprimerLiaison(Liaison liaison)
         {
             this.openConnection();
-            string req = "delete from liaison where duree=?duree and portDepart=?portDepart and portArrivee=?portArrivee and idSecteur=?idSecteur";
+            string req = "delete from liaison where id=?id";
             MySqlCommand mySqlCom = new MySqlCommand(req, mySqlCn);
-            mySqlCom.Parameters.Add("duree", MySqlDbType.VarChar).Value = liaison.Duree;
-            mySqlCom.Parameters.Add("portDepart", MySqlDbType.Int32).Value = liaison.PortDepart.Id;
-            mySqlCom.Parameters.Add("portArrivee", MySqlDbType.Int32).Value = liaison.PortArrive.Id;
-            mySqlCom.Parameters.Add("idSecteur", MySqlDbType.Int32).Value = liaison.Secteur.Id;
+            mySqlCom.Parameters.Add("id", MySqlDbType.Int32).Value = liaison.Id;
             mySqlCom.ExecuteNonQuery();
             this.closeConnection();
         }
-
+        // Modifier une liaison
         public void modifierLiaison(Liaison liaison, string duree, Port portArrivee, Port portDepart)
         {
             this.openConnection();
-            string req = "update liaison set duree=?dureeModifier, portDepart=?portDepartModifier, portArrivee=?portArriveeModifier " +
-                "where duree=?duree and portDepart=?portDepart and portArrivee=?portArrivee and idSecteur=?idSecteur";
+            string req = "update liaison set duree=?duree, portDepart=?portDepart, portArrivee=?portArrivee where id=?id";
             MySqlCommand mySqlCom = new MySqlCommand(req, mySqlCn);
-            mySqlCom.Parameters.Add("dureeModifier", MySqlDbType.VarChar).Value = liaison.Duree;
-            mySqlCom.Parameters.Add("portDepartModifier", MySqlDbType.Int32).Value = liaison.PortDepart.Id;
-            mySqlCom.Parameters.Add("portArriveeModifier", MySqlDbType.Int32).Value = liaison.PortArrive.Id;
 
             mySqlCom.Parameters.Add("duree", MySqlDbType.VarChar).Value = liaison.Duree;
             mySqlCom.Parameters.Add("portDepart", MySqlDbType.Int32).Value = liaison.PortDepart.Id;
             mySqlCom.Parameters.Add("portArrivee", MySqlDbType.Int32).Value = liaison.PortArrive.Id;
-            mySqlCom.Parameters.Add("idSecteur", MySqlDbType.Int32).Value = liaison.Secteur.Id;
+            mySqlCom.Parameters.Add("id", MySqlDbType.Int32).Value = liaison.Id;
             mySqlCom.ExecuteNonQuery();
             this.closeConnection();
         }

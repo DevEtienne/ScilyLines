@@ -98,7 +98,7 @@
             this.listBoxSecteur.Location = new System.Drawing.Point(52, 46);
             this.listBoxSecteur.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.listBoxSecteur.Name = "listBoxSecteur";
-            this.listBoxSecteur.Size = new System.Drawing.Size(291, 104);
+            this.listBoxSecteur.Size = new System.Drawing.Size(291, 154);
             this.listBoxSecteur.TabIndex = 0;
             this.listBoxSecteur.SelectedIndexChanged += new System.EventHandler(this.listBoxSecteur_SelectedIndexChanged);
             this.listBoxSecteur.Format += new System.Windows.Forms.ListControlConvertEventHandler(this.listBoxSecteur_Format);
@@ -112,7 +112,7 @@
             this.listBoxLiaison.Location = new System.Drawing.Point(376, 46);
             this.listBoxLiaison.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.listBoxLiaison.Name = "listBoxLiaison";
-            this.listBoxLiaison.Size = new System.Drawing.Size(291, 104);
+            this.listBoxLiaison.Size = new System.Drawing.Size(291, 154);
             this.listBoxLiaison.TabIndex = 5;
             this.listBoxLiaison.Format += new System.Windows.Forms.ListControlConvertEventHandler(this.listBoxLiaison_Format);
             // 

@@ -8,6 +8,7 @@ namespace ScilyLines
 {
     public class Liaison
     {
+        private int id;
         private string duree;
         private Port portDepart;
         private Port portArrive;
@@ -19,7 +20,7 @@ namespace ScilyLines
             this.portArrive = portArrive;
             this.secteur = secteur;
         }
-
+        public int Id { get => id; set => id = value; }
         public string Duree { get => duree; set => duree = value; }
         public Port PortDepart { get => portDepart; set => portDepart = value; }
         public Port PortArrive { get => portArrive; set => portArrive = value; }
