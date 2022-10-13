@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
+using ScilyLines.Controleur;
 
 namespace ScilyLines
 {
@@ -19,6 +20,7 @@ namespace ScilyLines
         public FormConnexion()
         {
             InitializeComponent();
+            this.MaximumSize = new System.Drawing.Size(480, 280) ;
         }
         private void buttonConnexion_Click(object sender, EventArgs e)
         {

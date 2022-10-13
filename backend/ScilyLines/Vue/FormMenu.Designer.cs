@@ -43,12 +43,14 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.comboBoxPortDepart = new System.Windows.Forms.ComboBox();
             this.comboBoxPortArrivee = new System.Windows.Forms.ComboBox();
+            this.textBoxDureeModifier = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // buttonAjouter
             // 
-            this.buttonAjouter.Location = new System.Drawing.Point(196, 294);
+            this.buttonAjouter.Location = new System.Drawing.Point(162, 74);
             this.buttonAjouter.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.buttonAjouter.Name = "buttonAjouter";
             this.buttonAjouter.Size = new System.Drawing.Size(103, 30);
@@ -59,7 +61,7 @@
             // 
             // buttonSupprimer
             // 
-            this.buttonSupprimer.Location = new System.Drawing.Point(342, 31);
+            this.buttonSupprimer.Location = new System.Drawing.Point(482, 51);
             this.buttonSupprimer.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.buttonSupprimer.Name = "buttonSupprimer";
             this.buttonSupprimer.Size = new System.Drawing.Size(128, 32);
@@ -70,10 +72,10 @@
             // 
             // buttonModifier
             // 
-            this.buttonModifier.Location = new System.Drawing.Point(508, 31);
+            this.buttonModifier.Location = new System.Drawing.Point(323, 74);
             this.buttonModifier.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.buttonModifier.Name = "buttonModifier";
-            this.buttonModifier.Size = new System.Drawing.Size(125, 32);
+            this.buttonModifier.Size = new System.Drawing.Size(103, 30);
             this.buttonModifier.TabIndex = 3;
             this.buttonModifier.Text = "Modifier";
             this.buttonModifier.UseVisualStyleBackColor = true;
@@ -176,10 +178,13 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.Lavender;
+            this.panel1.Controls.Add(this.label4);
+            this.panel1.Controls.Add(this.textBoxDureeModifier);
             this.panel1.Controls.Add(this.comboBoxPortDepart);
             this.panel1.Controls.Add(this.comboBoxPortArrivee);
             this.panel1.Controls.Add(this.buttonSupprimer);
             this.panel1.Controls.Add(this.buttonModifier);
+            this.panel1.Controls.Add(this.buttonAjouter);
             this.panel1.Location = new System.Drawing.Point(34, 220);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(654, 128);
@@ -203,6 +208,23 @@
             this.comboBoxPortArrivee.Size = new System.Drawing.Size(103, 24);
             this.comboBoxPortArrivee.TabIndex = 15;
             // 
+            // textBoxDureeModifier
+            // 
+            this.textBoxDureeModifier.Location = new System.Drawing.Point(326, 24);
+            this.textBoxDureeModifier.Name = "textBoxDureeModifier";
+            this.textBoxDureeModifier.Size = new System.Drawing.Size(100, 22);
+            this.textBoxDureeModifier.TabIndex = 15;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.BackColor = System.Drawing.Color.Lavender;
+            this.label4.Location = new System.Drawing.Point(349, 0);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(44, 16);
+            this.label4.TabIndex = 15;
+            this.label4.Text = "Durée";
+            // 
             // FormMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -218,13 +240,13 @@
             this.Controls.Add(this.listBoxLiaison);
             this.Controls.Add(this.listBoxSecteur);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.buttonAjouter);
             this.Controls.Add(this.panel1);
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "FormMenu";
             this.Text = "FormMenu";
             this.Load += new System.EventHandler(this.FormMenu_Load);
             this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -246,5 +268,7 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.ComboBox comboBoxPortDepart;
         private System.Windows.Forms.ComboBox comboBoxPortArrivee;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox textBoxDureeModifier;
     }
 }
