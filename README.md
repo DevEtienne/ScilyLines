@@ -1,14 +1,13 @@
 ### Projet ScilyLines
 
-Prérequis :
+PrÃ©requis :
 
---Base de données--
-db-scilylines.sql
+Base de donnÃ©es : db-scilylines.sql
 
---Création Utilisateur--
+CrÃ©ez une table admin(username, password)
+InsÃ©rez admin en username et 3db857812fdaf74e3de40fec4080ff96 en password
 
-Vous devez créer au préalable un utilisateur dans la base de données -> utilisateur: admin | Mot de passe: 3db857812fdaf74e3de40fec4080ff96
+--Identifiants de connexion sur l'application--
 
---Identifiants de connexion--
 Utilisateur : admin
 Mot de passe : ihHPMkA5ANzOs
