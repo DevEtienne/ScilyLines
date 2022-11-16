@@ -24,6 +24,15 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Ajout de l'utilisateur admin
+--
+
+DROP user `admin`@`localhost`;
+flush privileges;
+CREATE USER 'admin'@'localhost' IDENTIFIED BY '3db857812fdaf74e3de40fec4080ff96';
+GRANT ALL PRIVILEGES ON * . * TO 'admin'@'localhost';
+
+--
 -- Structure de la table `liaison`
 --
 
@@ -34,24 +43,86 @@ CREATE TABLE IF NOT EXISTS `liaison` (
   `portDepart` int(11) NOT NULL,
   `portArrivee` int(11) NOT NULL,
   `idSecteur` int(2) NOT NULL,
-  PRIMARY KEY (`id`),
   KEY `fk-depart` (`portDepart`),
   KEY `fk-arrivee` (`portArrivee`),
   KEY `id` (`id`),
   KEY `duree` (`duree`),
   KEY `fk-Secteur` (`idSecteur`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `liaison`
 --
 
 INSERT INTO `liaison` (`id`, `duree`, `portDepart`, `portArrivee`, `idSecteur`) VALUES
-(15, '1h30', 1, 2, 1),
-(16, '4h', 2, 4, 2),
-(17, '2h', 1, 4, 2);
+(28, '2h50', 2, 3, 1),
+(32, '4h', 3, 1, 2);
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `login`
+--
+
+DROP TABLE IF EXISTS `login`;
+CREATE TABLE IF NOT EXISTS `login` (
+  `username` varchar(50) NOT NULL,
+  `password` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Déchargement des données de la table `login`
+--
+
+INSERT INTO `login` (`username`, `password`) VALUES
+('admin', '3db857812fdaf74e3de40fec4080ff96');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `port`
+--
+
+DROP TABLE IF EXISTS `port`;
+CREATE TABLE IF NOT EXISTS `port` (
+  `id` int(11) NOT NULL,
+  `nom` varchar(30) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Déchargement des données de la table `port`
+--
+
+INSERT INTO `port` (`id`, `nom`) VALUES
+(1, 'Palerme'),
+(2, 'Ustica'),
+(3, 'Stromboli'),
+(4, 'Lipari');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `secteur`
+--
+
+DROP TABLE IF EXISTS `secteur`;
+CREATE TABLE IF NOT EXISTS `secteur` (
+  `id` int(2) NOT NULL,
+  `nom` varchar(20) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Déchargement des données de la table `secteur`
+--
+
+INSERT INTO `secteur` (`id`, `nom`) VALUES
+(1, 'Palerme'),
+(2, 'Messine');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
