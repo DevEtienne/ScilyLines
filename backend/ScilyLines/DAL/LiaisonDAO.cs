@@ -40,9 +40,9 @@ namespace ScilyLines.DAL
                 //Récupération des attributs de liaison
                 int idLiaison = (int)reader["id"];
                 string dureeLiaison = (string)reader["duree"];
-                int idPortDepart = (int)reader["portDepart"];
-                int idPortArrivee = (int)reader["portArrivee"];
-                int idSecteur = (int)reader["idSecteur"];
+                int idPortDepart = (int)reader["port_depart_id"];
+                int idPortArrivee = (int)reader["port_arrivee_id"];
+                int idSecteur = (int)reader["secteur_id"];
                 Port portDepart = LiaisonDAO.findPortById(idPortDepart, listePort);
                 Port portArrivee = LiaisonDAO.findPortById(idPortArrivee, listePort);
                 Secteur secteur = LiaisonDAO.findSecteurById(idSecteur, listeSecteur);
@@ -62,14 +62,14 @@ namespace ScilyLines.DAL
         {
             maConnexionSql = ConnexionSql.getInstance(provider, database, uid, mdp);
             maConnexionSql.openConnection();
-            string req = "insert into liaison(duree, portDepart, portArrivee, idSecteur) values (?duree, ?portDepart, ?portArrivee, ?idSecteur)";
+            string req = "insert into liaison(port_depart_id , secteur_id , port_arrivee_id , duree) values (?port_depart_id, ?secteur_id, ?port_arrivee_id, ?duree)";
             Ocom = maConnexionSql.reqExec(req);
+            Ocom.Parameters.Add("port_depart_id", MySqlDbType.Int32).Value = liaison.PortDepart.Id;
+            Ocom.Parameters.Add("secteur_id", MySqlDbType.Int32).Value = liaison.Secteur.Id;
+            Ocom.Parameters.Add("port_arrivee_id", MySqlDbType.Int32).Value = liaison.PortArrive.Id;
             Ocom.Parameters.Add("duree", MySqlDbType.VarChar).Value = liaison.Duree;
-            Ocom.Parameters.Add("portDepart", MySqlDbType.Int32).Value = liaison.PortDepart.Id;
-            Ocom.Parameters.Add("portArrivee", MySqlDbType.Int32).Value = liaison.PortArrive.Id;
-            Ocom.Parameters.Add("idSecteur", MySqlDbType.Int32).Value = liaison.Secteur.Id;
             Ocom.ExecuteNonQuery();
-            
+
             req = "select id from liaison order by id desc limit 1";
             Ocom = maConnexionSql.reqExec(req);
             int idLiaison = (int)Ocom.ExecuteScalar();

@@ -40,7 +40,7 @@ namespace ScilyLines.DAL
             while (reader.Read())
             {
                 int idSecteur = (int)reader["id"];
-                string nomSecteur = (string)reader["nom"];
+                string nomSecteur = (string)reader["libelle"];
                 Secteur secteur = new Secteur(idSecteur, nomSecteur);
                 listeSecteur.Add(secteur);
             }
